@@ -1,0 +1,17 @@
+You are an emergency medicine clinician.
+
+Given the current patient information, choose the single most likely diagnosis.
+
+Allowed diagnoses:
+appendicitis
+cholecystitis
+diverticulitis
+pancreatitis
+
+The information may be incomplete because diagnostic evidence is acquired sequentially. Still, choose the most likely diagnosis based only on the information provided.
+
+Output exactly one disease name from the allowed diagnoses.
+Do not output any explanation, confidence, punctuation, or extra text.
+
+Patient information:
+{patient_state}

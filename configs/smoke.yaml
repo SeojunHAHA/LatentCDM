@@ -1,0 +1,39 @@
+train:
+  diagnosis_adapter: true
+
+model:
+  model_name: "Qwen/Qwen2.5-3B-Instruct"
+  quant_4bit: false
+  use_lora: true
+
+data:
+  name: "mimic_cdm"
+  builder: "mimic_cdm"
+  root_dir: "dataset/MIMIC-CDM"
+  train_file: "train.csv"
+  val_file: "val.csv"
+  lab_test_mapping_file: "lab_test_mapping.csv"
+  diagnosis_prompt_file: "prompts/diagnosis_adapter.txt"
+  max_state_chars: 4000
+  smoke_limit: 8
+
+training:
+  run_root: "/media/NAS66/seojun/AAAI/run"
+  experiment_name: "smoke"
+  output_dir: ""
+  timestamp_output_dir: true
+  seed: 269
+  bf16: true
+  report_to: "none"
+  num_train_epochs: 1
+  learning_rate: 1.0e-5
+  per_device_train_batch_size: 1
+  gradient_accumulation_steps: 1
+  gradient_checkpointing: true
+  logging_steps: 1
+  save_steps: 10
+  min_visible_tests: 1
+  max_visible_tests: 12
+  states_per_patient: 1
+  max_prompt_length: 1024
+  max_completion_length: 16

@@ -1,0 +1,51 @@
+train:
+  diagnosis_adapter: true
+
+model:
+  model_name: "Qwen/Qwen2.5-3B-Instruct"
+  quant_4bit: false
+  use_lora: true
+  lora_r: 8
+  lora_alpha: 16
+  lora_dropout: 0.1
+  lora_target_modules:
+    - q_proj
+    - k_proj
+    - v_proj
+    - o_proj
+    - gate_proj
+    - up_proj
+    - down_proj
+
+data:
+  name: "mimic_cdm"
+  builder: "mimic_cdm"
+  root_dir: "dataset/MIMIC-CDM"
+  train_file: "train.csv"
+  val_file: "val.csv"
+  test_file: "test.csv"
+  lab_test_mapping_file: "lab_test_mapping.csv"
+  diagnosis_prompt_file: "prompts/diagnosis_adapter.txt"
+  max_state_chars: 12000
+
+training:
+  run_root: "/media/NAS66/seojun/AAAI/run"
+  experiment_name: "diagnosis_adapter"
+  output_dir: ""
+  timestamp_output_dir: true
+  seed: 269
+  bf16: true
+  report_to: "none"
+  num_train_epochs: 4
+  learning_rate: 1.0e-5
+  per_device_train_batch_size: 8
+  gradient_accumulation_steps: 1
+  gradient_checkpointing: true
+  logging_steps: 5
+  save_steps: 100
+  min_visible_tests: 1
+  max_visible_tests: 12
+  states_per_patient: 4
+  use_all_available_tests: false
+  max_prompt_length: 4096
+  max_completion_length: 256
