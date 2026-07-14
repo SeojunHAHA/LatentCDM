@@ -9,6 +9,7 @@ import yaml
 @dataclass
 class TrainConfig:
     diagnosis_adapter: bool = True
+    planner_adapter: bool = False
 
 
 @dataclass
@@ -36,7 +37,7 @@ class ModelConfig:
 class DataConfig:
     name: str = "mimic_cdm"
     builder: str = "mimic_cdm"
-    root_dir: str = "dataset/MIMIC-CDM"
+    root_dir: str = "dataset"
     train_file: str = "train.csv"
     val_file: str = "val.csv"
     test_file: str = "test.csv"
@@ -48,7 +49,7 @@ class DataConfig:
 
 @dataclass
 class TrainingConfig:
-    run_root: str = "/media/NAS66/seojun/AAAI/run"
+    run_root: str = "/media/NAS/nas_175/seojun/LatentCDM/runs"
     experiment_name: str = "diagnosis_adapter"
     output_dir: str = ""
     timestamp_output_dir: bool = True
@@ -71,6 +72,23 @@ class TrainingConfig:
 
 
 @dataclass
+class PlannerConfig:
+    diagnosis_adapter_dir: str = ""
+    memory_tokens_per_layer: int = 1
+    num_belief_tokens: int = 1
+    bridge_hidden_dim: int = 2048
+    candidate_diseases: list[str] = field(
+        default_factory=lambda: [
+            "appendicitis",
+            "cholecystitis",
+            "diverticulitis",
+            "pancreatitis",
+        ]
+    )
+    action_prefix: str = "Action:"
+
+
+@dataclass
 class ExperimentConfig:
     root_dir: Path
     config_path: Path
@@ -78,6 +96,7 @@ class ExperimentConfig:
     model: ModelConfig = field(default_factory=ModelConfig)
     data: DataConfig = field(default_factory=DataConfig)
     training: TrainingConfig = field(default_factory=TrainingConfig)
+    planner: PlannerConfig = field(default_factory=PlannerConfig)
 
 
 def _coerce_value(current: Any, value: Any) -> Any:

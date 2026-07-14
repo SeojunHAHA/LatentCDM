@@ -37,7 +37,7 @@ Latent-CDM/
 By default, configs point to:
 
 ```text
-dataset/MIMIC-CDM/
+dataset/
 ├── train.csv
 ├── val.csv
 ├── test.csv
@@ -49,18 +49,23 @@ Dataset rendering is selected by `data.builder`. The current builder is `mimic_c
 ## Diagnosis Adapter Training
 
 ```bash
-cd /home/seojun/Workspace/AAAI/Latent-CDM
-CUDA_VISIBLE_DEVICES=0 /home/seojun/Workspace/KAAI/.venv/bin/python train.py --config configs/diagnosis_adapter.yaml
+cd /home/seojun/Workspace/AAAI/LatentCDM
+export HF_HOME=/media/NAS/nas_175/seojun/LatentCDM/cache/huggingface
+export TORCH_HOME=/media/NAS/nas_175/seojun/LatentCDM/cache/torch
+CUDA_VISIBLE_DEVICES=0 python train.py --config configs/diagnosis_adapter.yaml
 ```
 
-Runs are saved under `training.run_root` with experiment, dataset, date, and time:
+Runs are saved under `training.run_root` with experiment, dataset, date, and time.
+The default points to NAS storage so large checkpoints and logs do not fill the local disk:
 
 ```text
-/media/NAS66/seojun/AAAI/run/{experiment_name}/{data.name}/YYYY-MM-DD/HH-MM-SS/
+/media/NAS/nas_175/seojun/LatentCDM/runs/{experiment_name}/{data.name}/YYYY-MM-DD/HH-MM-SS/
 ```
 
 For a small sanity run:
 
 ```bash
-CUDA_VISIBLE_DEVICES=0 /home/seojun/Workspace/KAAI/.venv/bin/python train.py --config configs/smoke.yaml
+export HF_HOME=/media/NAS/nas_175/seojun/LatentCDM/cache/huggingface
+export TORCH_HOME=/media/NAS/nas_175/seojun/LatentCDM/cache/torch
+CUDA_VISIBLE_DEVICES=0 python train.py --config configs/smoke.yaml
 ```

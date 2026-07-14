@@ -1,5 +1,6 @@
 train:
-  diagnosis_adapter: true
+  diagnosis_adapter: false
+  planner_adapter: true
 
 model:
   model_name: "Qwen/Qwen2.5-3B-Instruct"
@@ -18,33 +19,47 @@ model:
     - down_proj
 
 data:
-  name: "rare_disease"
-  builder: "rare_disease"
-  root_dir: "dataset/Rare-disease"
+  name: "mimic_cdm"
+  builder: "mimic_cdm"
+  root_dir: "dataset"
   train_file: "train.csv"
   val_file: "val.csv"
   test_file: "test.csv"
+  lab_test_mapping_file: "lab_test_mapping.csv"
   diagnosis_prompt_file: "prompts/diagnosis_adapter.txt"
   max_state_chars: 12000
+  smoke_limit: 2
 
 training:
   run_root: "/media/NAS/nas_175/seojun/LatentCDM/runs"
-  experiment_name: "diagnosis_adapter"
+  experiment_name: "planner_adapter_smoke"
   output_dir: ""
   timestamp_output_dir: true
   seed: 269
   bf16: true
   report_to: "none"
-  num_train_epochs: 4
+  num_train_epochs: 1
   learning_rate: 1.0e-5
-  per_device_train_batch_size: 8
+  per_device_train_batch_size: 1
   gradient_accumulation_steps: 1
-  gradient_checkpointing: true
-  logging_steps: 5
-  save_steps: 100
+  gradient_checkpointing: false
+  logging_steps: 1
+  save_steps: 10
   min_visible_tests: 1
   max_visible_tests: 12
-  states_per_patient: 4
+  states_per_patient: 1
   use_all_available_tests: false
   max_prompt_length: 4096
   max_completion_length: 32
+
+planner:
+  diagnosis_adapter_dir: "/media/NAS/nas_175/seojun/LatentCDM/runs/diagnosis_adapter/mimic_cdm/2026-07-11/16-24-32/final"
+  memory_tokens_per_layer: 1
+  num_belief_tokens: 1
+  bridge_hidden_dim: 2048
+  candidate_diseases:
+    - appendicitis
+    - cholecystitis
+    - diverticulitis
+    - pancreatitis
+  action_prefix: "Action:"

@@ -20,7 +20,7 @@ model:
 data:
   name: "mimic_cdm"
   builder: "mimic_cdm"
-  root_dir: "dataset/MIMIC-CDM"
+  root_dir: "dataset"
   train_file: "train.csv"
   val_file: "val.csv"
   test_file: "test.csv"
@@ -29,7 +29,7 @@ data:
   max_state_chars: 12000
 
 training:
-  run_root: "/media/NAS66/seojun/AAAI/run"
+  run_root: "/media/NAS/nas_175/seojun/LatentCDM/runs"
   experiment_name: "diagnosis_adapter"
   output_dir: ""
   timestamp_output_dir: true

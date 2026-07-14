@@ -9,7 +9,7 @@ model:
 data:
   name: "mimic_cdm"
   builder: "mimic_cdm"
-  root_dir: "dataset/MIMIC-CDM"
+  root_dir: "dataset"
   train_file: "train.csv"
   val_file: "val.csv"
   lab_test_mapping_file: "lab_test_mapping.csv"
@@ -18,7 +18,7 @@ data:
   smoke_limit: 8
 
 training:
-  run_root: "/media/NAS66/seojun/AAAI/run"
+  run_root: "/media/NAS/nas_175/seojun/LatentCDM/runs"
   experiment_name: "smoke"
   output_dir: ""
   timestamp_output_dir: true
